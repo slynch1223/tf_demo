@@ -1,0 +1,6 @@
+creator      = "slynch1223"
+environment  = "dev"
+namespace    = "tf_first"
+organization = "lynchbros"
+owner        = "slynch1223"
+region       = "us-east-1"
