@@ -29,8 +29,14 @@ provider "aws" {
   }
 }
 
-module "s3_bucket" {
-  source = "github.com/slynch1223/terraform_modules/s3_bucket/"
+# module "s3_bucket" {
+#   source = "github.com/slynch1223/terraform_modules/s3_bucket/"
 
-  bucket_name = "slynch1223-tf-"
-}
+#   bucket_name = "slynch1223-tf-"
+# }
+
+# module "vpc" {
+#   source = "github.com/slynch1223/terraform_modules/vpc/"
+
+#   cidr_block = "10.0.0.0/16"
+# }
