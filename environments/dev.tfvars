@@ -1,6 +1,6 @@
 creator      = "slynch1223"
 environment  = "dev"
-namespace    = "tf_first"
+namespace    = "tf_demo"
 organization = "lynchbros"
 owner        = "slynch1223"
 region       = "us-east-1"

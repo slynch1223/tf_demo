@@ -1,4 +1,6 @@
 terraform {
+  required_version = ">= 1.0"
+
   cloud {
     organization = "lynchbros"
 
@@ -29,14 +31,10 @@ provider "aws" {
   }
 }
 
-# module "s3_bucket" {
-#   source = "github.com/slynch1223/terraform_modules/s3_bucket/"
 
-#   bucket_name = "slynch1223-tf-"
-# }
+module "vpc" {
+  source = "./modules/vpc"
 
-# module "vpc" {
-#   source = "github.com/slynch1223/terraform_modules/vpc/"
-
-#   cidr_block = "10.0.0.0/16"
-# }
+  cidr = "10.0.0.0/16"
+  name = "sl-demo"
+}
