@@ -1,6 +1,9 @@
 # Local .terraform directories
 **/.terraform/*
 
+# Attempting to get Git to ignore this file
+.terraform.lock.hcl
+
 # .tfstate files
 *.tfstate
 *.tfstate.*

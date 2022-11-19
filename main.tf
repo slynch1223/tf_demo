@@ -1,14 +1,5 @@
 terraform {
-  required_version = ">= 1.0"
-
-  cloud {
-    organization = "lynchbros"
-
-    workspaces {
-      name = "tf_first"
-    }
-  }
-
+  // Stripped out so I can use local state for testing
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -24,9 +15,9 @@ provider "aws" {
   default_tags {
     tags = {
       Creator      = var.creator
+      Environment  = var.environment // keeping things alphabetical
       Owner        = var.owner
       Organization = var.organization
-      Environment  = var.environment
     }
   }
 }
@@ -36,5 +27,5 @@ module "vpc" {
   source = "./modules/vpc"
 
   cidr = "10.0.0.0/16"
-  name = "sl-demo"
+  name = "ml-demo"
 }
