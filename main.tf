@@ -1,40 +1,33 @@
-terraform {
-  required_version = ">= 1.0"
-
-  cloud {
-    organization = "lynchbros"
-
-    workspaces {
-      name = "tf_first"
-    }
-  }
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 4.15"
-    }
-  }
-}
-
-# Configure the AWS Provider
-provider "aws" {
-  region = var.region
-
-  default_tags {
-    tags = {
-      Creator      = var.creator
-      Owner        = var.owner
-      Organization = var.organization
-      Environment  = var.environment
-    }
-  }
-}
-
-
 module "vpc" {
   source = "./modules/vpc"
 
-  cidr = "10.0.0.0/16"
-  name = "sl-demo"
+  cidr     = var.cidr_block
+  vpc_name = "${var.namespace}-${var.environment}"
+}
+
+# Get active availability zone list
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+# Create Public subnets
+module "subnets" {
+  source = "./modules/subnets"
+  count  = 2
+
+  availability_zone = index(data.aws_availability_zones.available.names, count.index)
+  cidr              = cidrsubnet(var.cidr_block, 2, count.index)
+  subnet_name       = "${var.namespace}-${var.environment}-public${count.index}"
+  vpc_id            = module.vpc.id
+}
+
+# Create Private subnets
+module "subnets" {
+  source = "./modules/subnets"
+  count  = 2
+
+  availability_zone = index(data.aws_availability_zones.available.names, count.index)
+  cidr              = cidrsubnet(var.cidr_block, 2, count.index + 2)
+  subnet_name       = "${var.namespace}-${var.environment}-private${count.index}"
+  vpc_id            = module.vpc.id
 }

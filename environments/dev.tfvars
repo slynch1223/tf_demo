@@ -1,6 +1,7 @@
+cidr_block   = "10.0.0.0/16"
 creator      = "slynch1223"
 environment  = "dev"
-namespace    = "tf_demo"
+namespace    = "sl-demo"
 organization = "lynchbros"
 owner        = "slynch1223"
 region       = "us-east-1"
