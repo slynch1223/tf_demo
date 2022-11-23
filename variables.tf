@@ -4,7 +4,7 @@ variable "cidr_block" {
   default     = "10.0.0.0/16"
 
   validation {
-    condition     = can(cidrhost(var.cidr, 32))
+    condition     = can(cidrhost(var.cidr_block, 32))
     error_message = "Must use vald CIDR syntax."
   }
 }

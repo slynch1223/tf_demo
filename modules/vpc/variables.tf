@@ -1,9 +1,9 @@
-variable "cidr" {
+variable "cidr_block" {
   description = "Specify a valid CIDR for new VPC."
   type        = string
 
   validation {
-    condition     = can(cidrhost(var.cidr, 32))
+    condition     = can(cidrhost(var.cidr_block, 32))
     error_message = "Must use vald CIDR syntax."
   }
 }
@@ -14,8 +14,8 @@ variable "enable_dns_support" {
   default     = true
 
   validation {
-    condition = can(regex("^([t][r][u][e]|[f][a][l][s][e])$", var.enable_dns_support))
-    error     = "Must be either true or false."
+    condition     = can(regex("^([t][r][u][e]|[f][a][l][s][e])$", var.enable_dns_support))
+    error_message = "Must be either true or false."
   }
 }
 
