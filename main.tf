@@ -1,8 +1,9 @@
 module "vpc" {
   source = "./modules/vpc"
 
-  cidr_block = var.cidr_block
-  vpc_name   = "${var.namespace}-${var.environment}"
+  cidr_block              = var.cidr_block
+  enable_internet_gateway = true
+  vpc_name                = "${var.namespace}-${var.environment}"
 }
 
 module "subnets" {

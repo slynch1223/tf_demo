@@ -19,6 +19,17 @@ variable "enable_dns_support" {
   }
 }
 
+variable "enable_internet_gateway" {
+  description = "Should an Internet Gateway be created/attached."
+  type        = bool
+  default     = true
+
+  validation {
+    condition     = can(regex("^([t][r][u][e]|[f][a][l][s][e])$", var.enable_internet_gateway))
+    error_message = "Must be either true or false."
+  }
+}
+
 variable "instance_tenancy" {
   description = "Define default tenacy for the new VPC."
   type        = string

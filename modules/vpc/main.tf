@@ -1,3 +1,4 @@
+# Create new VPC
 resource "aws_vpc" "this" {
   cidr_block         = var.cidr_block
   enable_dns_support = var.enable_dns_support
@@ -6,6 +7,23 @@ resource "aws_vpc" "this" {
   tags = {
     Name = var.vpc_name
   }
+}
+
+# Create new Internet Gateway if requested
+resource "aws_internet_gateway" "this" {
+  count = var.enable_internet_gateway ? 1 : 0
+
+  tags = {
+    Name = "${var.vpc_name}-igw"
+  }
+}
+
+# Attache Internet Gateway to new VPC
+resource "aws_internet_gateway_attachment" "this" {
+  count = var.enable_internet_gateway ? 1 : 0
+
+  internet_gateway_id = aws_internet_gateway.this.id
+  vpc_id              = aws_vpc.this.id
 }
 
 # Ensure traffic is restricted in Default Security Group
