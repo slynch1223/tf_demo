@@ -18,7 +18,7 @@ resource "aws_internet_gateway" "this" {
   }
 }
 
-# Attache Internet Gateway to new VPC
+# Attach Internet Gateway to new VPC
 resource "aws_internet_gateway_attachment" "this" {
   count = var.enable_internet_gateway ? 1 : 0
 
@@ -26,9 +26,40 @@ resource "aws_internet_gateway_attachment" "this" {
   vpc_id              = aws_vpc.this.id
 }
 
-# Ensure traffic is restricted in Default Security Group
+# Setup Default Route table to use new Internet Gateway
+resource "aws_default_route_table" "this" {
+  default_route_table_id = aws_vpc.this.default_route_table_id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.this.id
+  }
+}
+
+# Block all Ingress traffic in Default Security Group except for 443
 resource "aws_default_security_group" "this" {
   vpc_id = aws_vpc.this.id
+
+  ingress {
+    protocol  = -1
+    self      = true
+    from_port = 80
+    to_port   = 80
+  }
+
+  ingress {
+    protocol  = -1
+    self      = true
+    from_port = 443
+    to_port   = 443
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 # Create Trust Policy to enable role usage
