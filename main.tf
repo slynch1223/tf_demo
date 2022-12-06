@@ -3,6 +3,7 @@ module "vpc" {
 
   cidr_block              = var.cidr_block
   enable_internet_gateway = true
+  region                  = var.region
   vpc_name                = "${var.namespace}-${var.environment}"
 }
 

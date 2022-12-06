@@ -20,7 +20,7 @@ variable "enable_dns_support" {
 }
 
 variable "enable_internet_gateway" {
-  description = "Should an Internet Gateway be created/attached."
+  description = "Should an Internet Gateway be attached?"
   type        = bool
   default     = true
 
