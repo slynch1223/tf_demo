@@ -18,7 +18,7 @@ resource "aws_iam_role" "this" {
   assume_role_policy = data.aws_iam_policy_document.trust_policy.json
 }
 
-# Attach policy to new IAM Role
+# Attach inline policy to new IAM Role
 resource "aws_iam_role_policy" "this" {
   name = "${var.name_prefix}-flow-logs"
   role = aws_iam_role.this.id
@@ -54,11 +54,11 @@ data "aws_iam_policy_document" "kms_key_policy" {
     sid    = "Enable CloudWatch Logs"
     effect = "Allow"
     actions = [
-      "kms:Encrypt*",
       "kms:Decrypt*",
-      "kms:ReEncrypt*",
+      "kms:Describe*",
+      "kms:Encrypt*",
       "kms:GenerateDataKey*",
-      "kms:Describe*"
+      "kms:ReEncrypt*"
     ]
     principals {
       type        = "Service"
